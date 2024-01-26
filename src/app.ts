@@ -1,0 +1,20 @@
+import express, { Application } from "express";
+import cors from "cors";
+import globalErrorHandler from "./app/middlewares/globalErrorhandler";
+import notFound from "./app/middlewares/notFound";
+import cookieParser from "cookie-parser";
+
+const app: Application = express();
+
+// parsers
+app.use(express.json());
+app.use(cors({ origin: "*", credentials: true }));
+app.use(cookieParser());
+
+// applications routes
+
+// api not found
+app.all("*", notFound);
+
+app.use(globalErrorHandler);
+export default app;
