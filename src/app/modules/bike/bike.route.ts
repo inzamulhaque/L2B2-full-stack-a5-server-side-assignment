@@ -8,6 +8,7 @@ import {
   createBike,
   getAllBikes,
   removeBike,
+  removeBulk,
   updateBike,
 } from "./bike.controller";
 
@@ -25,6 +26,8 @@ router.patch(
   validateRequest(updateBikeValidationSchema),
   updateBike
 );
+
+router.delete("/bulk-remove", auth(), removeBulk);
 
 const bikeRouter = router;
 export default bikeRouter;

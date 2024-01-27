@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import {
+  bulkRemoveFromDB,
   createBikeIntoDB,
   getAllBikeSFromDB,
   removeBikeFromDB,
@@ -36,7 +37,7 @@ const removeBike = catchAsync(async (req, res) => {
   const result = await removeBikeFromDB(id);
 
   sendResponse(res, {
-    statusCode: httpStatus.CREATED,
+    statusCode: httpStatus.OK,
     success: true,
     message: "Bike is removed successfully",
     data: result,
@@ -56,4 +57,15 @@ const updateBike = catchAsync(async (req, res) => {
   });
 });
 
-export { getAllBikes, createBike, removeBike, updateBike };
+const removeBulk = catchAsync(async (req, res) => {
+  const result = await bulkRemoveFromDB(req.body.ids);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Bulk removed successfully",
+    data: result,
+  });
+});
+
+export { getAllBikes, createBike, removeBike, updateBike, removeBulk };

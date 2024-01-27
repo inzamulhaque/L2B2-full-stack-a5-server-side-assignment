@@ -37,9 +37,17 @@ const updateBikeIntoDB = async (id: string, payload: Partial<IBike>) => {
   return result;
 };
 
+const bulkRemoveFromDB = async (payload: string[]) => {
+  const result = await Bike.deleteMany({
+    _id: { $in: payload },
+  });
+  return result;
+};
+
 export {
   getAllBikeSFromDB,
   createBikeIntoDB,
   removeBikeFromDB,
   updateBikeIntoDB,
+  bulkRemoveFromDB,
 };
