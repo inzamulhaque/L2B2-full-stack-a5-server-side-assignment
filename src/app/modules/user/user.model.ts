@@ -51,8 +51,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.statics.isUserExistByCustomId = async function (id: string) {
-  const user = await User.findOne({ id }).select("+password");
+userSchema.statics.isUserExistByEmail = async function (email: string) {
+  const user = await User.findOne({ email }).select("+password");
   return user;
 };
 
@@ -61,15 +61,6 @@ userSchema.statics.isPasswordMatched = async function (
   hashedPassword
 ) {
   return await bcrypt.compare(plainTextPassword, hashedPassword);
-};
-
-userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
-  passwordChangedTimestamp: Date,
-  jwtIssuedTimestamp: number
-) {
-  const passwordChangedTime =
-    new Date(passwordChangedTimestamp).getTime() / 1000;
-  return passwordChangedTime > jwtIssuedTimestamp;
 };
 
 const User = model<IUser, UserModel>("User", userSchema);
