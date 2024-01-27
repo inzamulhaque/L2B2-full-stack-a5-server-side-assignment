@@ -17,5 +17,6 @@ export interface IBike {
   color: string;
   mileage: number;
   isDeleted: boolean;
+  isVisible: boolean;
   insurance?: IInsurance;
 }
