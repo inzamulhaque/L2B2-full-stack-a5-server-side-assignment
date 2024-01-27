@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
-import { createOrderIntoDB } from "./sale.service";
+import { createOrderIntoDB, getSaleHistoryFromDB } from "./sale.service";
 
 const createOrder = catchAsync(async (req, res) => {
   const { email } = req.user;
@@ -15,4 +15,16 @@ const createOrder = catchAsync(async (req, res) => {
   });
 });
 
-export { createOrder };
+const getSaleHistory = catchAsync(async (req, res) => {
+  const { time } = req.query;
+  const result = await getSaleHistoryFromDB(time as string);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Get Sale History successfully",
+    data: result,
+  });
+});
+
+export { createOrder, getSaleHistory };
