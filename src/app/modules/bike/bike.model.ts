@@ -27,25 +27,34 @@ const bikeSchema = new Schema<IBike>({
   type: { type: String, required: true },
   color: { type: String, required: true },
   mileage: { type: Number, required: true },
+  isDeleted: { type: Boolean, default: false },
   insurance: { type: insuranceSchema },
 });
 
 bikeSchema.pre("save", async function (next) {
   const bike = this;
-  const result = await Bike.find({
+  const result = await Bike.findOne({
     name: bike.name,
     price: bike.price,
     releaseDate: bike.releaseDate,
     brand: bike.brand,
     model: bike.model,
     color: bike.color,
+    isDeleted: false,
   });
 
-  if (result.length) {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      "This bike already added into database"
+  if (result) {
+    const newQuantity = bike.quantity + result.quantity;
+
+    await Bike.findByIdAndUpdate(
+      result._id,
+      {
+        quantity: newQuantity,
+      },
+      { new: true }
     );
+
+    throw new AppError(httpStatus.OK, "Quantity Updated");
   }
   next();
 });

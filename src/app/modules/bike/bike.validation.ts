@@ -22,4 +22,22 @@ const bikeValidationSchema = z.object({
   }),
 });
 
+const updateBikeValidationSchema = z.object({
+  body: z.object({
+    name: z.string().optional(),
+    price: z.number().optional(),
+    quantity: z.number().optional(),
+    releaseDate: z.string().optional(),
+    brand: z.string().optional(),
+    model: z.string().optional(),
+    size: z.string().optional(),
+    type: z.string().optional(),
+    color: z.string().optional(),
+    mileage: z.number().optional(),
+    insurance: insuranceValidationSchema.optional(),
+  }),
+});
+
+export { updateBikeValidationSchema };
+
 export default bikeValidationSchema;
