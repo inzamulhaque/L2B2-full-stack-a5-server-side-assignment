@@ -3,9 +3,21 @@ import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import {
   createBikeIntoDB,
+  getAllBikeSFromDB,
   removeBikeFromDB,
   updateBikeIntoDB,
 } from "./bike.service";
+
+const getAllBikes = catchAsync(async (req, res) => {
+  const result = await getAllBikeSFromDB(req.query);
+
+  sendResponse(res, {
+    statusCode: httpStatus.FOUND,
+    success: true,
+    message: "Get all bikes",
+    data: result,
+  });
+});
 
 const createBike = catchAsync(async (req, res) => {
   const { email } = req.user;
@@ -44,4 +56,4 @@ const updateBike = catchAsync(async (req, res) => {
   });
 });
 
-export { createBike, removeBike, updateBike };
+export { getAllBikes, createBike, removeBike, updateBike };

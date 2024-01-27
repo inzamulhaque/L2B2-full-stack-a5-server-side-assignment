@@ -2,6 +2,12 @@ import httpStatus from "http-status";
 import AppError from "../../errors/AppError";
 import { IBike } from "./bike.interface";
 import Bike from "./bike.model";
+import { getBikesWithQuery } from "./bike.utils";
+
+const getAllBikeSFromDB = async (query: Record<string, unknown>) => {
+  const result = await getBikesWithQuery(query);
+  return result;
+};
 
 const createBikeIntoDB = async (payload: Partial<IBike>, userEmail: string) => {
   const result = await Bike.create({ ...payload, userEmail });
@@ -31,4 +37,9 @@ const updateBikeIntoDB = async (id: string, payload: Partial<IBike>) => {
   return result;
 };
 
-export { createBikeIntoDB, removeBikeFromDB, updateBikeIntoDB };
+export {
+  getAllBikeSFromDB,
+  createBikeIntoDB,
+  removeBikeFromDB,
+  updateBikeIntoDB,
+};

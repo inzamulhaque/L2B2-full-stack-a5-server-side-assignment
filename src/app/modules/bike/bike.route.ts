@@ -4,9 +4,16 @@ import validateRequest from "../../middlewares/validateRequest";
 import bikeValidationSchema, {
   updateBikeValidationSchema,
 } from "./bike.validation";
-import { createBike, removeBike, updateBike } from "./bike.controller";
+import {
+  createBike,
+  getAllBikes,
+  removeBike,
+  updateBike,
+} from "./bike.controller";
 
 const router: Router = Router();
+
+router.get("/", auth(), getAllBikes);
 
 router.post("/", auth(), validateRequest(bikeValidationSchema), createBike);
 
