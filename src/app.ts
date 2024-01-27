@@ -3,6 +3,7 @@ import cors from "cors";
 import globalErrorHandler from "./app/middlewares/globalErrorhandler";
 import notFound from "./app/middlewares/notFound";
 import cookieParser from "cookie-parser";
+import router from "./routes";
 
 const app: Application = express();
 
@@ -12,6 +13,7 @@ app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 
 // applications routes
+app.use("/api/v1", router);
 
 // api not found
 app.all("*", notFound);
