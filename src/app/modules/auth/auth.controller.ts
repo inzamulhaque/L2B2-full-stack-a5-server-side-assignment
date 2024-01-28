@@ -1,6 +1,6 @@
 import httpStatus from "http-status";
 import sendResponse from "../../utils/sendResponse";
-import { loginUserService } from "./auth.service";
+import { loginUserService, refreshTokenService } from "./auth.service";
 import catchAsync from "../../utils/catchAsync";
 import config from "../../config";
 
@@ -23,4 +23,16 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
-export { loginUser };
+const refreshToken = catchAsync(async (req, res) => {
+  const { refreshToken } = req.cookies;
+  const result = await refreshTokenService(refreshToken);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Access token is retrieved succesfully!",
+    data: result,
+  });
+});
+
+export { loginUser, refreshToken };
