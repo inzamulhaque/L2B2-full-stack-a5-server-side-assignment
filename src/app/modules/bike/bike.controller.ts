@@ -13,7 +13,7 @@ const getAllBikes = catchAsync(async (req, res) => {
   const result = await getAllBikeSFromDB(req.query);
 
   sendResponse(res, {
-    statusCode: httpStatus.FOUND,
+    statusCode: httpStatus.OK,
     success: true,
     message: "Get all bikes",
     data: result,
